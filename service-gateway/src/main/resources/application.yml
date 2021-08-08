@@ -1,0 +1,26 @@
+server:
+  port: 9100
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/products/**
+        - id: REVIEW-SERVICE
+          uri: lb://REVIEW-SERVICE
+          predicates:
+            - Path=/review/**
+  application:
+    name: SERVICE-GATEWAY
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
